@@ -1,4 +1,4 @@
-# My personal blog
+# my personal blog
 
 hosted at [blog.lucahost.dev](https://blog.lucahost.dev)
 
