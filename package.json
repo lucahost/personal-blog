@@ -10,7 +10,7 @@
     "blueimp-md5": "2.12.0",
     "feed": "4.0.0",
     "import-all.macro": "2.0.3",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "navi": "^0.13.6",
     "navi-scripts": "^0.13.3",
     "netlify-cli": "2.15.0",
