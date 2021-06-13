@@ -20,9 +20,7 @@ function Bio(props: BioProps) {
     `}>
       <img src={photoURL} alt="Me" />
       <p>
-        Star Wars Fan, {' '} <br />
-        <a href="https://github.com/lucahost">Developer</a>, <br />
-        <a href="https://lucahost.dev">Builder</a>
+        <a href="https://github.com/lucahost">Software Engineer</a>, <br />
       </p>
     </div>
   )
