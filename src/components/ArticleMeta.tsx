@@ -1,49 +1,44 @@
-import { join } from 'path'
-import React from 'react'
-import { Link } from 'react-navi'
+import { Link } from 'react-router-dom'
 import { formatDate } from '../utils/formats'
 import styles from './ArticleMeta.module.css'
 
 interface ArticleMetaProps {
-  blogRoot: string
-  data: any
-  readingTime?: any
+  date?: string
+  tags?: string[]
+  readingTime?: string
 }
 
-function ArticleMeta({ blogRoot, data, readingTime }: ArticleMetaProps) {
-  let readingTimeElement
-  if (readingTime) {
-    let minutes = Math.max(Math.round(readingTime.minutes), 1)
-    let cups = Math.round(minutes / 5)
-    readingTimeElement = (
-      <React.Fragment>
-        {' '}
-        &bull;{' '}
-        <span className={styles.readingTime}>
-          {new Array(cups || 1).fill('☕️').join('')} {minutes} min read
-        </span>
-      </React.Fragment>
-    )
-  }
-
+function ArticleMeta({ date, tags, readingTime }: ArticleMetaProps) {
   return (
-    <small className={styles.ArticleMeta}>
-      <time dateTime={data.date.toUTCString()}>{formatDate(data.date)}</time>
-      {data.tags && data.tags.length && (
-        <>
-          {' '}
-          &bull;{' '}
-          <ul className={styles.tags}>
-            {data.tags.map(tag => (
-              <li key={tag}>
-                <Link href={join(blogRoot, 'tags', tag)}>{tag}</Link>
-              </li>
-            ))}
-          </ul>
-        </>
+    <div className={styles.container}>
+      <div className={styles.meta}>
+        {date && (
+          <time className={styles.date} dateTime={date}>
+            {formatDate(date)}
+          </time>
+        )}
+        
+        {readingTime && (
+          <span className={styles.readingTime}>
+            {readingTime}
+          </span>
+        )}
+      </div>
+      
+      {tags && tags.length > 0 && (
+        <div className={styles.tags}>
+          {tags.map(tag => (
+            <Link
+              key={tag}
+              to={`/tags/${tag}`}
+              className={styles.tag}
+            >
+              #{tag}
+            </Link>
+          ))}
+        </div>
       )}
-      {readingTimeElement || null}
-    </small>
+    </div>
   )
 }
 

@@ -23,3 +23,47 @@
   margin-top: 7rem;
   margin-bottom: 0.5rem;
 }
+
+.article {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.article h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article h2 a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.article h2 a:hover {
+  color: #0066cc;
+}
+
+.article p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tags span {
+  color: #0066cc;
+  font-weight: 500;
+}

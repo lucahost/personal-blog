@@ -1,67 +1,60 @@
-import React from 'react'
-import { Link, View, useCurrentRoute } from 'react-navi'
-import { MDXProvider } from '@mdx-js/tag'
-import siteMetadata from '../siteMetadata'
+import { MDXProvider } from '@mdx-js/react'
+import { Link } from 'react-router-dom'
 import ArticleMeta from './ArticleMeta'
-import Bio from './Bio'
 import styles from './BlogPostLayout.module.css'
 
-interface BlogPostLayoutProps {
-  blogRoot: string
+const components = {
+  h1: (props: any) => <h1 className={styles.h1} {...props} />,
+  h2: (props: any) => <h2 className={styles.h2} {...props} />,
+  h3: (props: any) => <h3 className={styles.h3} {...props} />,
+  p: (props: any) => <p className={styles.p} {...props} />,
+  pre: (props: any) => <pre className={styles.pre} {...props} />,
+  code: (props: any) => <code className={styles.code} {...props} />,
+  a: (props: any) => <a className={styles.link} {...props} />,
+  ul: (props: any) => <ul className={styles.ul} {...props} />,
+  ol: (props: any) => <ol className={styles.ol} {...props} />,
+  li: (props: any) => <li className={styles.li} {...props} />,
+  blockquote: (props: any) => <blockquote className={styles.blockquote} {...props} />,
 }
 
-function BlogPostLayout({ blogRoot }: BlogPostLayoutProps) {
-  let { title, data, url } = useCurrentRoute()
+interface BlogPostLayoutProps {
+  children?: React.ReactNode
+  title?: string
+  date?: string
+  tags?: string[]
+  readingTime?: string
+}
 
+function BlogPostLayout({ children, title, date, tags, readingTime }: BlogPostLayoutProps) {
   return (
-    <View>
-      {({ MDXComponent, readingTime }) =>
-        // The content for posts is an MDX component, so we'll need
-        // to use <MDXProvider> to ensure that links are rendered
-        // with <Link>, and thus use pushState.
-        <article className={styles.container}>
+    <div className={styles.container}>
+      <article>
+        {title && (
           <header className={styles.header}>
-            <h1 className={styles.title}>
-              <Link href={url.pathname}>{title}</Link>
-            </h1>
-            <ArticleMeta
-              blogRoot={blogRoot}
-              data={data}
-              readingTime={readingTime}
-            />
+            <h1 className={styles.title}>{title}</h1>
+            {(date || tags || readingTime) && (
+              <ArticleMeta 
+                date={date}
+                tags={tags}
+                readingTime={readingTime}
+              />
+            )}
           </header>
-          <MDXProvider
-            components={{
-              a: Link,
-              wrapper: ({ children }) => (
-                <div className={styles.content}>{children}</div>
-              ),
-            }}>
-            <MDXComponent />
-          </MDXProvider>
-          <footer className={styles.footer}>
-            <h3 className={styles.title}>
-              <Link href={blogRoot}>{siteMetadata.title}</Link>
-            </h3>
-            <Bio className={styles.bio} />
-            <section className={styles.links}>
-              {data.previousDetails && (
-                <Link
-                  className={styles.previous}
-                  href={data.previousDetails.href}>
-                  ← {data.previousDetails.title}
-                </Link>
-              )}
-              {data.nextDetails && (
-                <Link className={styles.next} href={data.nextDetails.href}>
-                  {data.nextDetails.title} →
-                </Link>
-              )}
-            </section>
-          </footer>
-        </article>
-      }
-    </View>
+        )}
+        
+        <MDXProvider components={components}>
+          <div className={styles.content}>
+            {children}
+          </div>
+        </MDXProvider>
+      </article>
+      
+      <footer className={styles.footer}>
+        <Link to="/" className={styles.backLink}>
+          ← Back to Blog
+        </Link>
+      </footer>
+    </div>
   )
 }
 

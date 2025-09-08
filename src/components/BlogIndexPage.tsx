@@ -1,54 +1,42 @@
-import { Route } from 'navi'
-import React from 'react'
-import { Link } from 'react-navi'
+import { Link } from 'react-router-dom'
 import siteMetadata from '../siteMetadata'
-import ArticleSummary from './ArticleSummary'
 import Bio from './Bio'
-import Pagination from './Pagination'
 import styles from './BlogIndexPage.module.css'
 
-interface BlogIndexPageProps {
-  blogRoot: string
-  pageCount: number
-  pageNumber: number
-  postRoutes: Route[]
-}
-
-function BlogIndexPage({
-  blogRoot: blogRoot,
-  pageCount,
-  pageNumber,
-  postRoutes,
-}: BlogIndexPageProps) {
+function BlogIndexPage() {
   return (
     <div>
       <header>
         <h1 className={styles.title}>
-          <Link href={blogRoot}>{siteMetadata.title}</Link>
+          <Link to="/">{siteMetadata.title}</Link>
         </h1>
         <Bio />
       </header>
-      <ul className={styles.articlesList}>
-        {postRoutes.map(route => (
-          <li key={route.url.href}>
-            <ArticleSummary blogRoot={blogRoot} route={route} />
-          </li>
-        ))}
-      </ul>
-      {pageCount > 1 && (
-        <Pagination
-          blogRoot={blogRoot}
-          pageCount={pageCount}
-          pageNumber={pageNumber}
-        />
-      )}
+      
+      <div className={styles.articlesList}>
+        <article className={styles.article}>
+          <h2>
+            <Link to="/posts/welcome">Welcome to the Modern Blog</Link>
+          </h2>
+          <p>
+            This blog has been completely modernized with React 18, Vite, TypeScript 5, 
+            and MDX support for rich content authoring.
+          </p>
+          <div className={styles.meta}>
+            <time>Jan 9, 2025</time>
+            <span>3 min read</span>
+            <div className={styles.tags}>
+              <span>#react</span>
+              <span>#vite</span>
+              <span>#mdx</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
       <footer className={styles.footer}>
         <div>
-          <a href="./rss.xml" target="_blank" style={{ float: 'right' }}>
-            RSS
-          </a>
-          <Link href="./about">About</Link> &bull;{' '}
-          <Link href="./tags">Tags</Link> &bull;{' '}
+          <Link to="/about">About</Link> &bull;{' '}
           <a href="https://github.com/lucahost/personal-blog">
             Source
           </a>
